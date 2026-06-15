@@ -1,0 +1,43 @@
+MIT License
+
+Copyright (c) 2026 Restore-Apps-CLI Contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+### ⚠️ LIMITACIÓN DE RESPONSABILIDAD / DISCLAIMER (ESPAÑOL)
+
+El software se proporciona "tal cual", para libre uso y distribución. Al utilizar esta herramienta, usted acepta que los autores, colaboradores y titulares de los derechos de autor NO se hacen responsables en ningún caso por reclamaciones, daños directos, indirectos, incidentales, especiales o consecuentes derivados del uso de este software, incluyendo de forma no limitativa:
+- Pérdida de datos o filtración de información sensible (como tokens de API, contraseñas, claves privadas o credenciales).
+- Daños al sistema operativo, hardware o archivos del host.
+- Modificaciones no autorizadas de configuraciones del sistema (dotfiles o symlinks).
+- Instalación de software no deseado, malicioso o de terceros.
+
+El usuario final es el único responsable de auditar, revisar y validar los archivos de manifiesto (`setup.yaml`) y dotfiles antes de ejecutar cualquier comando de restauración, verificación o instalación en su máquina. El uso de esta herramienta se realiza bajo su propio riesgo y responsabilidad.
+
+### ⚠️ LIMITATION OF LIABILITY / DISCLAIMER (ENGLISH)
+
+This software is provided "as is", for free use and distribution. By using this tool, you agree that the authors, contributors, and copyright holders shall NOT be held liable under any circumstances for any claims, direct, indirect, incidental, special, or consequential damages arising from the use of this software, including but not limited to:
+- Loss of data or leakage of sensitive information (such as API tokens, passwords, private keys, or credentials).
+- Damage to the operating system, hardware, or host files.
+- Unauthorized modifications to system configurations (dotfiles or symlinks).
+- Installation of unwanted, malicious, or third-party software.
+
+The end-user is solely responsible for auditing, reviewing, and validating all manifest files (`setup.yaml`) and dotfiles before executing any restore, verification, or installation commands on their machine. Use of this tool is entirely at your own risk.
