@@ -1,0 +1,86 @@
+# dotenv-manager Manifest - Sistema Setup PC
+
+version: "1.0"
+
+metadata:
+  os: "ubuntu-22.04"
+  arch: "x86_64"
+  timestamp: "2024-01-15T14:30:00Z"
+  hostname: "perez-dev-machine"
+  user: "perez"
+
+system:
+  locale: "es_SV.UTF-8"
+  timezone: "America/El_Salvador"
+
+packages:
+  # TIER 1: Dependencias críticas - PRD §RF-2
+  - name: "build-essential"
+    manager: "apt"
+    version: "12.9"
+    tier: 1
+    description: "Essential build tools"
+    
+  - name: "python3.11"
+    manager: "apt"
+    version: "3.11.7"
+    tier: 1
+    post_install:
+      - "python3.11 -m pip install --upgrade pip"
+      - "python3.11 -m pip install virtualenv"
+    
+  - name: "git"
+    manager: "apt"
+    version: "2.40.0"
+    tier: 1
+    post_install:
+      - "git config --global user.name 'Perez'"
+      - "git config --global user.email 'perez@example.com'"
+  
+  # TIER 2: Aplicaciones principales
+  - name: "docker.io"
+    manager: "apt"
+    version: "24.0.1"
+    tier: 2
+    depends_on: ["build-essential"]
+    description: "Container runtime"
+    post_install:
+      - "sudo usermod -aG docker $USER"
+      - "sudo systemctl enable docker"
+  
+  - name: "vscode"
+    manager: "flatpak"
+    version: "latest"
+    tier: 2
+    description: "Code editor"
+    post_install:
+      - "code --install-extension ms-python.python"
+      - "code --install-extension ms-vscode.remote-remote-ssh"
+  
+  # TIER 3: Aplicaciones opcionales
+  - name: "teams"
+    manager: "snap"
+    version: "latest"
+    tier: 3
+
+# Configuraciones a restaurar
+dotfiles:
+  - source_path: ".bashrc"
+    destination_path: "~/.bashrc"
+    is_secret: false
+    skip_if_exists: false
+  
+  - source_path: ".config/code/settings.json"
+    destination_path: "~/.config/Code/User/settings.json"
+    is_secret: false
+  
+  - source_path: ".gitconfig"
+    destination_path: "~/.gitconfig"
+    is_secret: false
+    skip_if_exists: true
+  
+  - source_path: ".ssh/config"
+    destination_path: "~/.ssh/config"
+    is_secret: false
+    permissions: "0600"
+    skip_if_exists: true

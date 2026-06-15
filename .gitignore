@@ -1,0 +1,69 @@
+# === dotenv-manager: Exclusiones de Archivos Sensibles y Desarrollo ===
+
+# Evitar subir variables de entorno y secretos sin querer
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+.env.development.local
+.env.production.local
+.env.test.local
+
+# Claves privadas, certificados y firmas
+*.pem
+*.key
+*.pub
+*.sig
+id_rsa
+id_ed25519
+private.pem
+public.pem
+private.key
+
+# Credenciales de sistema locales (AWS, Google Cloud, SSH, etc.)
+.aws/
+.gcloud/
+.ssh/
+credentials
+config
+.test_config.json
+
+# Archivos de manifiestos temporales o de prueba generados en el desarrollo
+test_*.yaml
+demo_*.yaml
+potentially_unsafe.yaml
+sample_manifest.yaml
+my_setup_report.html
+
+# Entornos virtuales de Python
+.venv/
+venv/
+ENV/
+env/
+active_env/
+
+# Caché y archivos compilados
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDEs y editores locales
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Exclusión a petición del usuario (mantener localmente pero no subir a Git)
+CHANGELOG.md
+tests/
