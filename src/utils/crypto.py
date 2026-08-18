@@ -47,11 +47,14 @@ def scan_dict_for_secrets(data: Any, path: str = "") -> List[Tuple[str, str]]:
     elif isinstance(data, dict):
         for key, val in data.items():
             current_path = f"{path}.{key}" if path else key
-            # Escanear el nombre de la clave en sí
-            key_secrets = check_value_for_secrets(key)
-            for ks in key_secrets:
-                findings.append((current_path, f"{ks} (en nombre de clave)"))
-            
+            # Escanear el nombre de la clave en sí (solo si el valor podría ser
+            # el secreto: un booleano es un flag de clasificación, no un secreto,
+            # por lo que claves como "is_secret" no deben disparar falsos positivos)
+            if not isinstance(val, bool):
+                key_secrets = check_value_for_secrets(key)
+                for ks in key_secrets:
+                    findings.append((current_path, f"{ks} (en nombre de clave)"))
+
             # Escanear el valor recursivamente
             findings.extend(scan_dict_for_secrets(val, current_path))
             

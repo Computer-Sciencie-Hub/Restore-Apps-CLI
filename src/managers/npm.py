@@ -1,6 +1,7 @@
 """
 Implementación de PackageManager para Node.js npm global - PRD §RT-5
 """
+import os
 import shutil
 import json
 from typing import Optional, List
@@ -8,6 +9,11 @@ from src.managers.base import PackageManager
 from src.models.package import Package
 from src.utils.shell import run_command
 from src.utils.logger import logger
+
+# En Windows, "npm" es un script .cmd, no un .exe: CreateProcess no puede
+# ejecutarlo directamente sin pasar por cmd.exe (shell=True). En POSIX, npm
+# es un ejecutable real, así que ahí NO se necesita shell=True.
+_NPM_SHELL = os.name == "nt"
 
 class NpmManager(PackageManager):
     """Gestor de paquetes para Node.js (npm global)"""
@@ -20,17 +26,17 @@ class NpmManager(PackageManager):
         """Verifica si npm está disponible en la PATH"""
         if shutil.which("npm") is not None:
             return True
-        code, _, _ = run_command(["npm", "--version"])
+        code, _, _ = run_command(["npm", "--version"], shell=_NPM_SHELL)
         return code == 0
 
     def is_installed(self, package_name: str) -> bool:
         """Verifica si un paquete npm está instalado globalmente"""
-        code, _, _ = run_command(["npm", "list", "-g", "--depth=0", package_name])
+        code, _, _ = run_command(["npm", "list", "-g", "--depth=0", package_name], shell=_NPM_SHELL)
         return code == 0
 
     def get_version(self, package_name: str) -> Optional[str]:
         """Obtiene la versión instalada de un paquete npm global"""
-        code, stdout, _ = run_command(["npm", "list", "-g", "--depth=0", "--json"])
+        code, stdout, _ = run_command(["npm", "list", "-g", "--depth=0", "--json"], shell=_NPM_SHELL)
         if not stdout:
             return None
         try:
@@ -59,7 +65,7 @@ class NpmManager(PackageManager):
             return True
 
         logger.info(f"Instalando globalmente '{package.name}' vía npm...")
-        code, stdout, stderr = run_command(cmd, timeout=300)
+        code, stdout, stderr = run_command(cmd, timeout=300, shell=_NPM_SHELL)
         if code == 0:
             logger.info(f"✓ Instalación de '{package.name}' completada exitosamente.")
             return True
@@ -70,7 +76,7 @@ class NpmManager(PackageManager):
 
     def get_all_installed(self) -> List[Package]:
         """Lista todos los paquetes globales instalados por npm"""
-        code, stdout, _ = run_command(["npm", "list", "-g", "--depth=0", "--json"])
+        code, stdout, _ = run_command(["npm", "list", "-g", "--depth=0", "--json"], shell=_NPM_SHELL)
         if not stdout:
             return []
         try:
