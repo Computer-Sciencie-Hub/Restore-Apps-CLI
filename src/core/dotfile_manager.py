@@ -48,9 +48,18 @@ class DotfileManager:
             raise PermissionError(f"Riesgo de seguridad: El origen del dotfile '{src}' es un enlace simbólico.")
 
         # 2. Evitar Path Traversal en destino (dst)
+        # No usar startswith: un directorio hermano (ej. "C:\Users\japer_evil")
+        # comparte el prefijo de string con el home sin estar realmente dentro de él.
         home = os.path.abspath(os.path.expanduser("~"))
         real_dst = os.path.abspath(dst)
-        if not real_dst.startswith(home):
+        home_cmp = os.path.normcase(home)
+        dst_cmp = os.path.normcase(real_dst)
+        try:
+            common = os.path.commonpath([home_cmp, dst_cmp])
+        except ValueError:
+            # Rutas en unidades/raíces distintas (ej. C:\ vs D:\): fuera del home
+            common = None
+        if common != home_cmp:
             raise PermissionError(f"Riesgo de seguridad: El destino '{dst}' está fuera del directorio del usuario '{home}'.")
 
     def verify_dotfile(self, dotfile: DotFile) -> str:
